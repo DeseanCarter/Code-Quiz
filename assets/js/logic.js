@@ -164,7 +164,7 @@ function startQuiz() {
 function endQuiz() {
     //clear interval
     //display 0
-//************************************ */
+    clearInterval(timeInterval);
     questionScreen.className = "hide"; 
     quizOverScreen.className = "start"; 
 }
@@ -227,7 +227,7 @@ var questionFourAnswer = "quotes";
 
 var questionFiveAnswer = "console log";*/
 
-
+//logic for pulling arrays
 var questionBank =[
     {
         question: "?",
