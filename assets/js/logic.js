@@ -42,39 +42,89 @@ var score = 0;
 
 
 
-var questionsObj = {
+
+
+
+//Questions Object
+var questions = [
+    { 
+        title: "Commonly used data types DO NOT include:",
+        choices: ["stings", "booleans", "alerts", "numbers"],
+        answer: "alerts" 
+    },
     
-       questionsSetOne: { title: "Commonly used data types DO NOT include:",
-       choices: ["stings", "booleans", "alerts", "numbers"],
-       answer: "alerts" },
-    
-    
-        questionsSetTwo: { title: "The condition in an if / else statement is enclosed within _____.",
+    {
+        title: "The condition in an if / else statement is enclosed within _____.",
         choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
-        answer: "parentheses"},
+        answer: "parentheses",
+    },
+    {
     
-    
-        questionsSetThree: { title: "Arrays in JavaScript can be used to store _____.",
+        title: "Arrays in JavaScript can be used to store _____.",
         choices: ["numbers and strings", "other arrays", "booleans", "all of the above"],
-        answer: "all of the above"},
-    
-    
-        questionSetFour: { title: "String values must be enclosed within _____ when being assigned to variables.",
+        answer: "all of the above",
+    },
+    {
+        title: "String values must be enclosed within _____ when being assigned to variables.",
         choices: ["commas", "curly brackets", "quotes", "parentheses"],
-        answer: "quotes"},
+        answer: "quotes",
+    },
+    {
     
-    
-        questionSetFive: { title: "A very useful tool used in development and debugging for printing content to the debugger is:",
+         title: "A very useful tool used in development and debugging for printing content to the debugger is:",
         choices: ["JavaScript", "terminal/bash", "for loops", "console log"],
-        answer: "console log"},
+        answer: "console log",
+    }
+];
+
+
+
+
+var indexPos = 0;
+
+
+
+
+function checkAnswer(){
+    console.log(this, questions[indexPos].answer);
+
+    if(questions[indexPos].answer == this.value ){
+        //correct
+        alert("Correct");
+    }else{
+        //incorrect
+        alert("wrong!!");
+      //  console.log(secondsLeft)
+        secondsLeft = secondsLeft - 5;
+        counterEl.textContent = secondsLeft;
+    }
+    //move on to the next question
+    indexPos++;
+
+    if(indexPos === questions.length){
+        //end our game
+        endQuiz();
+    }else{
+       // get next question
+        getQuestions();
+    }
+    //is there even a next question to go to?
+
+        //if there is go to it
+         //if not end the game
+
+
+
 }
-//
+
 function createButtons(create) {
+        answerChoices.innerHTML = "";
     for (var i = 0; i < create.length; i++) {
         var btn = document.createElement("button");
         var x = document.createTextNode(create[i]);
         btn.appendChild(x);
-        btn.id = create[i];
+        btn.value = create[i];
+        btn.onclick = checkAnswer;
         answerChoices.appendChild(btn);
     }
 }
@@ -96,6 +146,61 @@ function createButtons(create) {
 
 //Start Button
 startButton.addEventListener("click", startQuiz);
+
+
+function getQuestions(){
+    createButtons(questions[indexPos].choices);
+    questionTitle.textContent = questions[indexPos].title;
+}
+
+function startQuiz() {
+    startScreen.className = "hide";
+    questionScreen.className = "start";
+    counterEl.textContent = secondsLeft;
+    setTime();
+    getQuestions();
+}
+
+function endQuiz() {
+    //clear interval
+    //display 0
+//************************************ */
+    questionScreen.className = "hide"; 
+    quizOverScreen.className = "start"; 
+}
+
+// Starts Timer
+function setTime() {
+    timeInterval = setInterval(function() {
+        secondsLeft--;
+    counterEl.textContent = secondsLeft;
+    
+        if(parseInt(counterEl.textContent) === 0) {
+            clearInterval(timeInterval);
+            endQuiz();
+        }
+    }, 1000)
+
+}
+
+
+
+
+//build buttons
+    //event listenr for each button
+    //build loop
+    //next questions
+
+//build penelties
+//lose time    
+//add points
+
+//local storage
+
+
+
+
+
 
 // Quiz Questions
 /*var questions = ["Commonly used data types DO NOT include:", "The condition in an if / else statement is enclosed within _____.", "Arrays in JavaScript can be used to store _____.", "String values must be enclosed within _____ when being assigned to variables.", "A very useful tool used in development and debugging for printing content to the debugger is:"]
@@ -122,43 +227,22 @@ var questionFourAnswer = "quotes";
 
 var questionFiveAnswer = "console log";*/
 
-function startQuiz() {
-    startScreen.className = "hide";
-    questionScreen.className = "start";
-    counterEl.textContent = 60;
-    setTime();
-    createButtons(questionsObj.questionsSetOne.choices);
-    questionTitle.textContent = questionsObj.questionsSetOne.title;
-}
 
-function endQuiz() {
-    questionScreen.className = "hide"; 
-    quizOverScreen.className = "start"; 
-}
+var questionBank =[
+    {
+        question: "?",
+        choices:["f", "d"],
+        answer:"f"
+    },
+    {
+        question: "?",
+        choices:["f", "d"],
+        answer:"f"
+    }
+]
 
-// Starts Timer
-function setTime() {
-    timeInterval = setInterval(function() {
-    counterEl.textContent--;
-    
-        if(parseInt(counterEl.textContent) === 0) {
-            clearInterval(timeInterval);
-            endQuiz();
-        }
-    }, 1000)
-
-}
+var indexPos = 0;
+questionBank[indexPos].answer
 
 
-
-
-//build buttons
-    //event listenr for each button
-    //build loop
-    //next questions
-
-//build penelties
-//lose time    
-//add points
-
-//local storage
+indexPos++;
