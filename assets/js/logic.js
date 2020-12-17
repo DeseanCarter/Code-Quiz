@@ -38,7 +38,7 @@ var secondsLeft = 75;
 var timeInterval;
 
 //Score
-var score = 0;
+var score = 1;
 
 
 
@@ -91,6 +91,7 @@ function checkAnswer(){
     if(questions[indexPos].answer == this.value ){
         //correct
         alert("Correct");
+        finalScoreScreen.textContent = score++
     }else{
         //incorrect
         alert("wrong!!");
@@ -183,7 +184,11 @@ function setTime() {
 
 }
 
+// submit.addEventListener("click", quizDone)
 
+// function quizDone() {
+//     window.location.href = "./highscores.html"
+// }
 
 
 //build buttons
@@ -197,6 +202,19 @@ function setTime() {
 
 //local storage
 
+// HOW TO KEEP SCORE
+
+
+
+
+
+
+
+
+
+// function userInitials() {
+//     initialsLog.value
+// }
 
 
 
@@ -228,21 +246,21 @@ var questionFourAnswer = "quotes";
 var questionFiveAnswer = "console log";*/
 
 //logic for pulling arrays
-var questionBank =[
-    {
-        question: "?",
-        choices:["f", "d"],
-        answer:"f"
-    },
-    {
-        question: "?",
-        choices:["f", "d"],
-        answer:"f"
-    }
-]
+// var questionBank =[
+//     {
+//         question: "?",
+//         choices:["f", "d"],
+//         answer:"f"
+//     },
+//     {
+//         question: "?",
+//         choices:["f", "d"],
+//         answer:"f"
+//     }
+// ]
 
-var indexPos = 0;
-questionBank[indexPos].answer
+// var indexPos = 0;
+// questionBank[indexPos].answer
 
 
-indexPos++;
+// indexPos++;
