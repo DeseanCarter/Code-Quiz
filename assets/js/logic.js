@@ -1,4 +1,4 @@
-//Variables
+// Global Variables
 
 //Start Button Variable
 var startButton = document.querySelector("#start");
@@ -25,13 +25,13 @@ var finalScoreScreen = document.querySelector("#final-score");
 var counterEl = document.querySelector("#time");
 
 //High Score Variable
-var highScore = document.querySelector("#highscores");
+//var highScore = document.querySelector("#highscores");
 
 //Initials Variable
-var initialsLog = document.querySelector("initials")
+var initialsLog = document.querySelector("#initials")
 
 //Submit button Variable
-var submit = document.querySelector("submit");
+var submit = document.querySelector("#submit");
 
 //Start Time Variables
 var secondsLeft = 75;
@@ -39,9 +39,6 @@ var timeInterval;
 
 //Score
 var score = 1;
-
-
-
 
 
 
@@ -79,23 +76,24 @@ var questions = [
 
 
 
-
+//Position of question asked.
 var indexPos = 0;
 
 
 
-
+//Checks to see if answer chosen is correct. Adds score via local sorage in real time. 
 function checkAnswer(){
     console.log(this, questions[indexPos].answer);
 
     if(questions[indexPos].answer == this.value ){
         //correct
         alert("Correct");
+        let score = parseInt(localStorage.getItem("score"))
         finalScoreScreen.textContent = score++
+        localStorage.setItem("score", score);
     }else{
         //incorrect
         alert("wrong!!");
-      //  console.log(secondsLeft)
         secondsLeft = secondsLeft - 5;
         counterEl.textContent = secondsLeft;
     }
@@ -109,15 +107,12 @@ function checkAnswer(){
        // get next question
         getQuestions();
     }
-    //is there even a next question to go to?
-
-        //if there is go to it
-         //if not end the game
-
+    
 
 
 }
 
+//Creates choice buttons to be shown on page.
 function createButtons(create) {
         answerChoices.innerHTML = "";
     for (var i = 0; i < create.length; i++) {
@@ -130,45 +125,40 @@ function createButtons(create) {
     }
 }
 
-/*function assignButtons(create) {
-    for (var i = 0; i < create.length; i++) {
-        let create[i] = document.getElementById(create[i])
-        
-        create[i].addEventListener("click", checkAnswer())
-    }
-}
-//assign buttons - need to get to next screen
 
-/*function checkAnswer(create) {
-    if(create === questionsObj.questionsSetOne.answer){
-        return 
-    }
-}*/
 
 //Start Button
 startButton.addEventListener("click", startQuiz);
 
-
+//Allows next set of questions to be asked on page.
 function getQuestions(){
     createButtons(questions[indexPos].choices);
     questionTitle.textContent = questions[indexPos].title;
 }
 
+//Function to start quiz then show question pages.
 function startQuiz() {
+    localStorage.setItem("score", 0);
     startScreen.className = "hide";
     questionScreen.className = "start";
     counterEl.textContent = secondsLeft;
     setTime();
     getQuestions();
 }
-
+// Ends Quiz then moves to score page.
 function endQuiz() {
-    //clear interval
-    //display 0
     clearInterval(timeInterval);
+    showScore();
     questionScreen.className = "hide"; 
     quizOverScreen.className = "start"; 
 }
+
+//Allows score to be show in local storage.
+function showScore() {
+    finalScoreScreen.textContent = localStorage.getItem('score')
+}
+
+
 
 // Starts Timer
 function setTime() {
@@ -184,83 +174,12 @@ function setTime() {
 
 }
 
-// submit.addEventListener("click", quizDone)
+//Buton to submit high score.
+submit.addEventListener("click", userInput)
 
-// function quizDone() {
-//     window.location.href = "./highscores.html"
-// }
-
-
-//build buttons
-    //event listenr for each button
-    //build loop
-    //next questions
-
-//build penelties
-//lose time    
-//add points
-
-//local storage
-
-// HOW TO KEEP SCORE
-
-
-
-
-
-
-
-
-
-// function userInitials() {
-//     initialsLog.value
-// }
-
-
-
-
-
-// Quiz Questions
-/*var questions = ["Commonly used data types DO NOT include:", "The condition in an if / else statement is enclosed within _____.", "Arrays in JavaScript can be used to store _____.", "String values must be enclosed within _____ when being assigned to variables.", "A very useful tool used in development and debugging for printing content to the debugger is:"]
-
-//Quiz Choices
-var questionOnechoices = ["stings", "booleans", "alerts", "numbers"];
-
-var questionTwoChoices = ["quotes", "curly brackets", "parentheses", "square brackets"];
-
-var questionThreeChoices = ["numbers and strings", "other arrays", "booleans", "all of the above"];
-
-var questionFourChoices = ["commas", "curly brackets", "quotes", "parentheses"];
-
-var questionFiveChoices = ["JavaScript", "terminal/bash", "for loops", "console log"];
-
-//Quiz Answers
-var questionOneAnswer = "alerts";
-
-var questionTwoAnswer = "parentheses";
-
-var questionThreeAnswer = "all of the above";
-
-var questionFourAnswer = "quotes";
-
-var questionFiveAnswer = "console log";*/
-
-//logic for pulling arrays
-// var questionBank =[
-//     {
-//         question: "?",
-//         choices:["f", "d"],
-//         answer:"f"
-//     },
-//     {
-//         question: "?",
-//         choices:["f", "d"],
-//         answer:"f"
-//     }
-// ]
-
-// var indexPos = 0;
-// questionBank[indexPos].answer
-
-
-// indexPos++;
+//Function used to input user initials to local storage. Then shows highscore screen.
+function userInput() {
+    initialsValue = initialsLog.value
+    localStorage.setItem("user", initialsValue)
+    window.location.href = "./highscores.html"
+}
